@@ -1,0 +1,967 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://w3id.org/curriculum#"
+     xml:base="https://w3id.org/curriculum"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:curriculum="https://w3id.org/curriculum/">
+    <owl:Ontology rdf:about="https://w3id.org/curriculum">
+        <owl:versionIRI rdf:resource="https://w3id.org/curriculum/1.0.0a"/>
+        <terms:created>2023-07-26</terms:created>
+        <terms:creator rdf:resource="https://orcid.org/0000-0001-7192-7143"/>
+        <terms:description xml:lang="en">This ontology is a formal representation that captures the fundamental concepts and their relationships to one another in the field of curriculum design and implementation. It provides a structured framework for organizing and understanding the key elements that make up a general curriculum. 
+
+Current development is managed via GitHub: https://github.com/yovisto/curriculum
+Feel free to give feedback, contribute, or raise issues.
+
+The model is developed based on the structure of the framework curricula for the states of Berlin and Brandenburg in Germany (https://bildungsserver.berlin-brandenburg.de/rlp-online). It is intended to serve as a starting point for formally opening up the structures of other states&apos; curricula and competency frameworks related to curricula. 
+
+This ontology includes concepts that enable a high-level description of a curriculum. Thereby three main components are put in relation to each other: subjects, competencies, learning content. 
+
+The model is inspired by the &quot;Datenmodell zur Abbildung von Lehrplänen&quot; https://dini-ag-kim.github.io/modell_lehrplaene/draft/ and reuses their dini:Curriculum and dini:CurriculumItem. Both extend the SKOS model in that the curriculum itself is to be understood as a subclass of skos:ConceptScheme and the individual components are subordinated to the curriculum as skos:Concept. Likewise, the herewith introduced classes are fitted in as subclasses, and the newly defined object properties inherit from skos:narrow and skos:broader to maintain the SKOS hierarchy.
+
+An overview is shown in the following image:
+
+![Overview](https://raw.githubusercontent.com/yovisto/curriculum/main/docs/overview1500.png)</terms:description>
+        <terms:license rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
+        <terms:title xml:lang="en">Curriculum Ontology</terms:title>
+        <owl:versionInfo>v1.0.0a</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/created"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/identifier -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/identifier"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/license"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/subject -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/subject"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#altLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#altLabel"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#definition -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#definition"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#example -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#example"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#prefLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#broader -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/2004/02/skos/core#broader"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#narrower -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/2004/02/skos/core#narrower"/>
+    
+
+
+    <!-- https://w3id.org/curriculum/competenceAreaOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/competenceAreaOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/hasCompetenceArea"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/competenceOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/competenceOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/hasCompetence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/contentOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/contentOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/hasContent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/curriculumOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/curriculumOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/hasCurriculum"/>
+        <rdfs:domain rdf:resource="https://w3id.org/dini/dini-ns/Curriculum"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/FederalState"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/exerciseOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/exerciseOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/hasExercise"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasCompetence -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasCompetence">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/Competence"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasCompetenceArea -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasCompetenceArea">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/CompetenceArea"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasContent -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasContent">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/LearningContent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasCurriculum -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasCurriculum">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:range rdf:resource="https://w3id.org/dini/dini-ns/Curriculum"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasExercise -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasExercise">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/Exercise"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasLevel -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasLevel">
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/levelOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasMaterial -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasMaterial">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/materialOf"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/Material"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasParentCompetenceArea -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasParentCompetenceArea">
+        <rdfs:subPropertyOf rdf:resource="https://w3id.org/curriculum/competenceAreaOf"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/hasSubCompetenceArea"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasPart -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasPart">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/partOf"/>
+        <rdfs:domain rdf:resource="https://w3id.org/dini/dini-ns/Curriculum"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/CurriculumPart"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasStandard -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasStandard">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/standardOf"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/Standard"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasSubCompetenceArea -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasSubCompetenceArea">
+        <rdfs:subPropertyOf rdf:resource="https://w3id.org/curriculum/hasCompetenceArea"/>
+        <rdfs:domain rdf:resource="https://w3id.org/curriculum/CompetenceArea"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/CompetenceArea"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasSubject -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasSubject">
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/subjectOf"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/Subject"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasTopic -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasTopic">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/topicOf"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/Topic"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/hasTopicArea -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/hasTopicArea">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#narrower"/>
+        <owl:inverseOf rdf:resource="https://w3id.org/curriculum/topicAreaOf"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/TopicArea"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/levelOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/levelOf">
+        <rdfs:domain rdf:resource="https://w3id.org/curriculum/Level"/>
+        <rdfs:range rdf:resource="https://w3id.org/curriculum/Standard"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/materialOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/materialOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/partOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/partOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/standardOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/standardOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/subjectOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/subjectOf"/>
+    
+
+
+    <!-- https://w3id.org/curriculum/topicAreaOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/topicAreaOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/curriculum/topicOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/curriculum/topicOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2004/02/skos/core#broader"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://w3id.org/curriculum/uri -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/curriculum/uri"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#Concept -->
+
+    <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#Concept"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#ConceptScheme -->
+
+    <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    
+
+
+    <!-- https://w3id.org/curriculum/AdditionalMaterial -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/AdditionalMaterial">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/Material"/>
+        <skos:prefLabel xml:lang="de">Zusatzmaterial</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">additional material</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/BB-Level -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/BB-Level">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/Level"/>
+        <skos:definition xml:lang="de">Berlin Brandenburg grouping of educational levels: 
+
+Für Grundschulen und Grundstufen der Gemeinschaftsschulen sowie an
+weiterführenden Schulen mit den Jahrgangsstufen 5 und 6 gilt:
+
+* Schulanfangsphase = Niveaustufen A, B, in Teilen C
+* Jahrgangsstufen 3 – 4 = Niveaustufe C, in Teilen D
+* Jahrgangsstufe 5 = Niveaustufen C – D
+* Jahrgangsstufe 6 = Niveaustufe D, in Teilen E
+
+Schülerinnen und Schüler mit dem sonderpädagogischen Förderbedarf Lernen
+werden auf folgenden Niveaustufen unterrichtet:
+* Jahrgangsstufe 3 = Niveaustufe B, in Teilen C
+* Jahrgangsstufen 4 – 6 = Niveaustufe C
+* Jahrgangsstufen 7 – 8 = Niveaustufe D
+* Jahrgangsstufen 9 – 10 = Niveaustufen D – E
+
+Für die Integrierte Sekundarschule gilt:
+grundlegendes Niveau:
+* Jahrgangsstufen 7 – 8 = Niveaustufen D – E, in Teilen F
+* Jahrgangsstufen 9 – 10 = Niveaustufe F, in Teilen G
+* erweitertes Niveau:
+* Jahrgangsstufen 7 – 8 = Niveaustufe E, in Teilen F
+* Jahrgangsstufen 9 – 10 = Niveaustufen F – G</skos:definition>
+        <skos:prefLabel xml:lang="de">BB Stufe</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">bb educational level</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/Competence -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/Competence">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CompetenceItem"/>
+        <skos:definition xml:lang="en">Competence is generally understood as the combination of knowledge and skills in coping with the demands of action. Persons are considered competent if they are able to regenerate currently required actions on the basis of knowledge, skills and abilities. 
+Instances of this class provide text that describes a particular competence (e.g. &quot;reading&quot;).</skos:definition>
+        <skos:example xml:lang="en">analyzing astronomical problems and tasks</skos:example>
+        <skos:example xml:lang="en">relating number ranges to each other</skos:example>
+        <skos:prefLabel xml:lang="de">Kompetenz</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">competence</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/CompetenceArea -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/CompetenceArea">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CompetenceItem"/>
+        <skos:definition xml:lang="en">CompetenceArea is understood as a general organizational item to group specific comptences thogether. E.g. &quot;reading competencies&quot;.</skos:definition>
+        <skos:example xml:lang="en">dealing with expertise</skos:example>
+        <skos:example xml:lang="en">probelm solving</skos:example>
+        <skos:example xml:lang="en">reading</skos:example>
+        <skos:prefLabel xml:lang="de">Kompetenzbereich</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">competence area</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/CompetenceItem -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/CompetenceItem">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/dini/dini-ns/CurriculumItem"/>
+        <rdfs:comment xml:lang="en">an organizational element to group competence related classes</rdfs:comment>
+        <skos:prefLabel xml:lang="de">Kompetenzelement</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">competence item</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/CurriculumForm -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/CurriculumForm">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/dini/dini-ns/CurriculumItem"/>
+        <skos:prefLabel xml:lang="de">Lehrplanausprägung</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">form of curriculum</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/CurriculumPart -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/CurriculumPart">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/dini/dini-ns/CurriculumItem"/>
+        <skos:prefLabel xml:lang="de">Lehrplanteil</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">curriculum part</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/EducationalLevel -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/EducationalLevel">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/Level"/>
+        <skos:definition xml:lang="de">Klassenlevel</skos:definition>
+        <skos:definition xml:lang="en">the year of school</skos:definition>
+        <skos:example xml:lang="de">7. Klasse</skos:example>
+        <skos:example xml:lang="de">Klasse 5</skos:example>
+        <skos:prefLabel xml:lang="de">Jahrgangsstufe</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">educational level</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/Exercise -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/Exercise">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/dini/dini-ns/CurriculumItem"/>
+        <skos:prefLabel xml:lang="en">exercise</skos:prefLabel>
+        <skos:prefLabel xml:lang="de">Übung</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/FederalState -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/FederalState">
+        <skos:prefLabel xml:lang="de">Bundesland</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">federal state</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/FirstForeignLanguage -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/FirstForeignLanguage">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CurriculumForm"/>
+        <skos:prefLabel xml:lang="de">Erste Fremdsprache</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">first foreign language</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/LearningContent -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/LearningContent">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/TopicItem"/>
+        <skos:definition xml:lang="en">Learning content that is taught as part of teaching. The learning content can be linked to competences that the learner can acquire while learning the content.</skos:definition>
+        <skos:definition xml:lang="de">Lerninhalt der im Rahmen des Unterrichts vermittelt wird. Der Lerninhalt kann mit Kompetenzen verknüpft sein, die die lernende Person beim Lernen des Inhalts erlangen kann.</skos:definition>
+        <skos:prefLabel xml:lang="de">Lerninhalte</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">learning content</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/Level -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/Level">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/dini/dini-ns/CurriculumItem"/>
+        <skos:prefLabel xml:lang="de">Stufe</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">level</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/MajorSubject -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/MajorSubject">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CurriculumForm"/>
+        <skos:prefLabel xml:lang="de">Hauptfach</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">major subject</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/Material -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/Material">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/dini/dini-ns/CurriculumItem"/>
+        <skos:prefLabel xml:lang="en">Learning Material</skos:prefLabel>
+        <skos:prefLabel xml:lang="de">Lernmaterial</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/MinorSubject -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/MinorSubject">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CurriculumForm"/>
+        <skos:prefLabel xml:lang="de">Nebenfach</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">minor subject</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/SecondForeignLanguage -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/SecondForeignLanguage">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CurriculumForm"/>
+        <skos:prefLabel xml:lang="de">Zweite Fremdsprache</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">second foreign language</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/Standard -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/Standard">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CompetenceItem"/>
+        <skos:definition xml:lang="en">The standards define the skills and knowledge regarding a particular competence that students at a particular grade level should acquire. The grade level can be specified with the hasLevel property.</skos:definition>
+        <skos:prefLabel xml:lang="de">Standard</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">standard</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/Subject -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/Subject">
+        <skos:prefLabel xml:lang="de">Fach</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">Subject</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/ThirdForeignLanguage -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/ThirdForeignLanguage">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/CurriculumForm"/>
+        <skos:prefLabel xml:lang="de">Dritte Fremdsprache</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">third foreign language</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/Topic -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/Topic">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/TopicItem"/>
+        <skos:prefLabel xml:lang="de">Thema</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">topic</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/TopicArea -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/TopicArea">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/curriculum/TopicItem"/>
+        <skos:prefLabel xml:lang="de">Themenfeld</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">topic area</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/curriculum/TopicItem -->
+
+    <owl:Class rdf:about="https://w3id.org/curriculum/TopicItem">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/dini/dini-ns/CurriculumItem"/>
+        <rdfs:comment>an organizational element to group competence related classes</rdfs:comment>
+        <skos:prefLabel xml:lang="de">Themenelement</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">topic item</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/dini/dini-ns/Curriculum -->
+
+    <owl:Class rdf:about="https://w3id.org/dini/dini-ns/Curriculum">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://w3id.org/curriculum/hasCompetenceArea"/>
+                        <owl:someValuesFrom rdf:resource="https://w3id.org/curriculum/CompetenceArea"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://w3id.org/curriculum/hasContent"/>
+                        <owl:someValuesFrom rdf:resource="https://w3id.org/curriculum/LearningContent"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://w3id.org/curriculum/hasSubject"/>
+                        <owl:someValuesFrom rdf:resource="https://w3id.org/curriculum/Subject"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+        <skos:definition xml:lang="en">Curriculum is a subclass of skos:ConceptScheme. It refers to a set of curriculum items (skos:Concepts), each providing means for the systematic planning and structuring of teaching and learning materials, as well as the instructional methods used within an education system or educational institution. It can be considered as a detailed plan that outlines the learning objectives, teaching materials, instructional strategies, assessment criteria, and time frame for a particular course, subject, or educational level. 
+The curriculum refers to a specific subject, school type, grade level(s) and form of expression (major/minor, 1st/2nd/3rd foreign language, etc.).</skos:definition>
+        <skos:definition xml:lang="de">Lehrplan ist eine Unterklasse von skos:ConceptScheme. Sie bezieht sich auf eine Reihe von Lehrplan-Elementen (skos:Concepts), die jeweils als Mittel für die systematische Planung und Strukturierung von Lehr- und Lernmaterialien sowie die in einem Bildungssystem oder einer Bildungseinrichtung verwendeten Lehrmethoden dienen. Der Lehrplan kann als Leitfaden betrachtet werden, der die Lernziele, Lehrmaterialien, Unterrichtsstrategien, Beurteilungskriterien und den Zeitrahmen für einen bestimmten Kurs, ein Fach oder eine Bildungsstufe umreißt. 
+Der Lehrplan bezieht sich auf ein bestimmtes Unterrichtsfach, Schulform, Klassenstufe(n) und Ausprägungsform (Hauptfach/Nebenfach, 1./2./3. Fremdsprache, usw.)</skos:definition>
+        <skos:prefLabel xml:lang="de">Lehrplan</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">curriculum</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/dini/dini-ns/CurriculumItem -->
+
+    <owl:Class rdf:about="https://w3id.org/dini/dini-ns/CurriculumItem">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <skos:definition xml:lang="en">Curriculum item a skos:Concept referrring to a Curriculum. It summarizes the things that are to be understood as part of a curriculum. These include, for example, teaching and learning materials, teaching methods, learning objectives, assessment criteria, time frame, subject, education level, etc.</skos:definition>
+        <skos:definition xml:lang="de">Das Lehrplanelement ist eine Unterklasse von skos:Concept, das sich auf einen Lehrplan bezieht. Es fasst die Dinge zusammen, die als Teil eines Lehrplan zu verstehen sind. Hierzu gehören z.B. Lehr- und Lernmaterialien, Lehrmethoden, Lernziele, Beurteilungskriterien, Zeitrahmen, Fach, Bildungsstufe, etc.</skos:definition>
+        <skos:prefLabel xml:lang="de">Lehrplanelement</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">curriculum item</skos:prefLabel>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://edu.yovisto.com/resource/bb/curriculum/Berlin -->
+
+    <owl:NamedIndividual rdf:about="https://edu.yovisto.com/resource/bb/curriculum/Berlin">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/FederalState"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://edu.yovisto.com/resource/bb/curriculum/Brandenburg -->
+
+    <owl:NamedIndividual rdf:about="https://edu.yovisto.com/resource/bb/curriculum/Brandenburg">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/FederalState"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/bbLevelA -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/bbLevelA">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/BB-Level"/>
+        <skos:altLabel>Niveaustufe A</skos:altLabel>
+        <skos:prefLabel>A</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/bbLevelB -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/bbLevelB">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/BB-Level"/>
+        <skos:altLabel>Niveaustufe B</skos:altLabel>
+        <skos:prefLabel>B</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/bbLevelC -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/bbLevelC">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/BB-Level"/>
+        <skos:altLabel>Niveaustufe C</skos:altLabel>
+        <skos:prefLabel>C</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/bbLevelD -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/bbLevelD">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/BB-Level"/>
+        <skos:altLabel>Niveaustufe D</skos:altLabel>
+        <skos:prefLabel>D</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/bbLevelE -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/bbLevelE">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/BB-Level"/>
+        <skos:altLabel>Niveaustufe E</skos:altLabel>
+        <skos:prefLabel>E</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/bbLevelF -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/bbLevelF">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/BB-Level"/>
+        <skos:altLabel>Niveaustufe F</skos:altLabel>
+        <skos:prefLabel>F</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/bbLevelG -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/bbLevelG">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/BB-Level"/>
+        <skos:altLabel>Niveaustufe G</skos:altLabel>
+        <skos:prefLabel>G</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel1 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel1">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 1</skos:altLabel>
+        <skos:prefLabel>1</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel10 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel10">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 10</skos:altLabel>
+        <skos:prefLabel>10</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel11 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel11">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 11</skos:altLabel>
+        <skos:prefLabel>11</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel12 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel12">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 12</skos:altLabel>
+        <skos:prefLabel>12</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel13 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel13">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 13</skos:altLabel>
+        <skos:prefLabel>13</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel2 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel2">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 2</skos:altLabel>
+        <skos:prefLabel>2</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel3 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel3">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 3</skos:altLabel>
+        <skos:prefLabel>3</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel4 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel4">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 4</skos:altLabel>
+        <skos:prefLabel>4</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel5 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel5">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 5</skos:altLabel>
+        <skos:prefLabel>5</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel6 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel6">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 6</skos:altLabel>
+        <skos:prefLabel>6</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel7 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel7">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 7</skos:altLabel>
+        <skos:prefLabel>7</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel8 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel8">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 8</skos:altLabel>
+        <skos:prefLabel>8</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/curriculum/educationalLevel9 -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/curriculum/educationalLevel9">
+        <rdf:type rdf:resource="https://w3id.org/curriculum/EducationalLevel"/>
+        <skos:altLabel>Jahrgang 9</skos:altLabel>
+        <skos:prefLabel>9</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="https://orcid.org/0000-0001-7192-7143">
+        <rdfs:label>Jörg Waitelonis</rdfs:label>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi -->
+
