@@ -96,9 +96,5 @@ def main():
     else:
         print("Invalid data format:", data)
     
-if __name__ == "__main__":
-    global curriculum_cntr, competence_area_cntr, compentence_cntr
-    curriculum_cntr = 0
-    competence_area_cntr = 0
-    compentence_cntr = 0
+if __name__ == "__main__":    
     main()
