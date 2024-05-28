@@ -1,6 +1,11 @@
 import json
-from rdflib import Graph, URIRef, Literal
-from rdflib.namespace import RDF, SKOS 
+from rdflib import XSD, Graph, Namespace, URIRef, Literal
+from rdflib.namespace import RDF, SKOS, RDFS
+import uuid
+
+RESOURCE_NS = Namespace("https://edu.yovisto.com/resource/lp/rp/")
+GRAPH_NS = Namespace("https://edu.yovisto.com/graph/lp/rp/")
+ONTOLOGY_NS = Namespace("https://w3id.org/lehrplan/ontology/")
 
 def read_json_file(filename):
     with open(filename, 'r') as file:
@@ -37,51 +42,37 @@ def remove_special_chars(input: str):
 
     return input.strip()    
 
-def write_tree_to_rdf(graph, level, parent_node, node):
-    global curriculum_cntr, competence_area_cntr, compentence_cntr
-
-    if (level == 0):
-        curriculum_cntr += 1
-        curri = URIRef(f"https://edu.yovisto.com/resource/rf/curriculum/{curriculum_cntr}")
-        graph.add((curri, RDF.type, SKOS.ConceptScheme))
-        graph.add((curri, RDF.type, URIRef("https://w3id.org/dini/dini-ns/Curriculum")))
-        graph.add((curri, SKOS.prefLabel, Literal(remove_special_chars(node['title']))))
-        graph.add((curri, SKOS.definition, Literal(f"Rahmenlehrplan Rheinland Pfalz: {remove_special_chars(node['title'])}")))
-        has_curriculum = URIRef("https://w3id.org/curriculum/hasCurriculum")
-        graph.add((parent_node, has_curriculum, curri))    
-        graph.add((parent_node, SKOS.narrower, curri))    
-        graph.add((curri, SKOS.broader, curri))    
-        for child in node.get('children', []):
-            write_tree_to_rdf(graph, level + 1, curri, child)
+def write_tree_to_rdf(graph, level, parent_node, node, graph_uri=None, index=0):    
+    if (level == 0):        
+        guid = uuid.uuid1()
+        curri = URIRef(RESOURCE_NS[f'{guid}'])
+        local_graph_uri = URIRef(GRAPH_NS[f'{guid}'])        
+        graph.add((curri, RDFS.isDefinedBy, local_graph_uri))        
+        graph.add((curri, RDF.type, ONTOLOGY_NS.LP_00000433))        
+        graph.add((curri, RDFS.label, Literal(remove_special_chars(node['title']))))
+        graph.add((curri, RDFS.comment, Literal(f"Rahmenlehrplan Rheinland Pfalz: {remove_special_chars(node['title'])}")))        
+        graph.add((curri, ONTOLOGY_NS.LP_00000029, parent_node))            
+        for local_index, child in enumerate(node.get('children', [])):
+            write_tree_to_rdf(graph, level + 1, curri, child, graph_uri=local_graph_uri, index=local_index)
     if (level == 1): 
-        for child in node.get('children', []):
-            write_tree_to_rdf(graph, level + 1, parent_node, child)
-    if (level == 2):
-        competence_area_cntr += 1
-        competence_area = URIRef(f"https://edu.yovisto.com/resource/rf/competencearea/{competence_area_cntr}")
-        graph.add((competence_area, RDF.type, SKOS.Concept))
-        graph.add((competence_area, RDF.type, URIRef("https://w3id.org/curriculum/CompetenceArea")))
-        graph.add((competence_area, RDF.type, URIRef("https://w3id.org/curriculum/CompetenceItem")))
-        graph.add((competence_area, RDF.type, URIRef("https://w3id.org/dini/dini-ns/CurriculumItem")))
-        graph.add((competence_area, SKOS.prefLabel, Literal(remove_special_chars(node['title']))))       
-        has_competence_area = URIRef("https://w3id.org/curriculum/hasCompetenceArea")
-        graph.add((parent_node, has_competence_area, competence_area))
-        graph.add((parent_node, SKOS.narrower, competence_area))    
-        graph.add((competence_area, SKOS.broader, parent_node))    
-        for child in node.get('children', []):
-            write_tree_to_rdf(graph, level + 1, competence_area, child)
-    if (level == 3):
-        compentence_cntr += 1
-        competence = URIRef(f"https://edu.yovisto.com/resource/rf/competence/{compentence_cntr}")
-        graph.add((competence, RDF.type, SKOS.Concept))
-        graph.add((competence, RDF.type, URIRef("https://w3id.org/curriculum/Competence")))
-        graph.add((competence, RDF.type, URIRef("https://w3id.org/curriculum/CompetenceItem")))
-        graph.add((competence, RDF.type, URIRef("https://w3id.org/dini/dini-ns/CurriculumItem")))
-        graph.add((competence, SKOS.prefLabel, Literal(remove_special_chars(node['title']))))       
-        has_competence = URIRef("https://w3id.org/curriculum/hasCompetence")
-        graph.add((parent_node, has_competence, competence))       
-        graph.add((parent_node, SKOS.narrower, competence))    
-        graph.add((competence, SKOS.broader, parent_node))     
+        for local_index, child in enumerate(node.get('children', [])):
+            write_tree_to_rdf(graph, level + 1, parent_node, child, graph_uri=graph_uri, index=local_index)
+    if (level == 2):        
+        competence_area = URIRef(RESOURCE_NS[f'{uuid.uuid1()}'])             
+        graph.add((competence_area, RDF.type, ONTOLOGY_NS.LP_00000431))        
+        graph.add((competence_area, RDFS.label, Literal(remove_special_chars(node['title']))))               
+        graph.add((competence_area, RDFS.isDefinedBy, graph_uri))                           
+        graph.add((parent_node, ONTOLOGY_NS.LP_00000008, competence_area))        
+        graph.add((competence_area, ONTOLOGY_NS.LP_00000460, Literal(index + 1, datatype=XSD.int)))                        
+        for local_index, child in enumerate(node.get('children', [])):
+            write_tree_to_rdf(graph, level + 1, competence_area, child, graph_uri=graph_uri, index=local_index)
+    if (level == 3):        
+        competence = URIRef(RESOURCE_NS[f'{uuid.uuid1()}'])
+        graph.add((competence, RDF.type, ONTOLOGY_NS.LP_00000432))        
+        graph.add((competence, RDFS.label, Literal(remove_special_chars(node['title']))))       
+        graph.add((competence, RDFS.isDefinedBy, graph_uri))                           
+        graph.add((parent_node, ONTOLOGY_NS.LP_00000008, competence))               
+        graph.add((competence, ONTOLOGY_NS.LP_00000460, Literal(index + 1, datatype=XSD.int)))                                
 
 def main():
     json_filename = 'rheinland_pfalz.json'
@@ -91,19 +82,17 @@ def main():
     if isinstance(data, list):        
         tree = build_tree(data)
         graph = Graph()
-        rf = URIRef("https://edu.yovisto.com/resource/rf/curriculum/RF")
-        federal_state = URIRef("https://w3id.org/curriculum/FederalState")
-        graph.add((rf, RDF.type, federal_state))
-        graph.add((rf, SKOS.prefLabel, Literal('Rheinland Pfalz')))  
+        
+        rp = ONTOLOGY_NS.LP_30000046
         with open(output_file, 'w') as file:
             for root_node in tree.values():
                 if root_node.get('parent_id') is None:
                     print_tree_to_file(root_node, 0, file)
-                    write_tree_to_rdf(graph, 0, rf, root_node)
+                    write_tree_to_rdf(graph, 0, rp, root_node)
         
-        output_file = "rheinland_pfalz.rdf"
-        graph.serialize(destination=output_file, format="xml")
-        print(f"RDF triples added and saved to {output_file}")
+        output_file = "rheinland_pfalz.ttl"
+        graph.serialize(destination=output_file, format="ttl")
+        print(f"Triples added and saved to {output_file}")
     else:
         print("Invalid data format:", data)
     
